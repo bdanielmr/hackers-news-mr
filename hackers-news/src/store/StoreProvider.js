@@ -1,0 +1,18 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
+import { createContext, useReducer } from 'react';
+import storeReducer, { initialStore } from './storeReducer';
+
+const StoreContext = createContext();
+
+const StoreProvider = ({ children }) => {
+  const [store, dispatch] = useReducer(storeReducer, initialStore);
+  return (
+    <StoreContext.Provider value={[store, dispatch]}>
+      {children}
+    </StoreContext.Provider>
+  );
+};
+
+export { StoreContext };
+export default StoreProvider;
