@@ -1,0 +1,66 @@
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+.custom-card {
+  width: 550px;
+  height: 90px;
+  margin: 10px;
+  padding: 0 0 0 26px;
+  opacity: 0.8;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  a {
+    font-size: 11px;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  article {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+  }
+  h3 {
+    font-size: 14px;
+    margin: 0;
+    text-align: start;
+  }
+}
+.custom-card:hover {
+  opacity: 0.4;
+}
+.time-icon::before {
+  font-family: fontAwesome;
+  font-size: 16px;
+  content: '\f017';
+  width: 16px;
+  height: 16px;
+  padding: 0px 5px 0px 0px;
+}
+.regular-heart-icon {
+  width: 18px;
+  height: 18px;
+}
+.heart-icon::before {
+  font-family: fontAwesome;
+  font-size: 16px;
+  content: '\f004';
+  width: 16px;
+  height: 16px;
+  padding: 0px 5px 0px 0px;
+  color: red;
+}
+.custom-car-buttom {
+  width: 68px;
+  border: none;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
