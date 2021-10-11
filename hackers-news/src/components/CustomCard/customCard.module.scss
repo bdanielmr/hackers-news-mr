@@ -1,5 +1,6 @@
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 .custom-card {
+  text-decoration: none;
   width: 550px;
   height: 90px;
   margin: 10px;
@@ -10,8 +11,15 @@
   background-color: #fff;
   display: flex;
   justify-content: space-between;
+  color: #606060;
   a {
     font-size: 11px;
+    text-decoration: none;
+    color: #606060;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   p {
     margin: 0;
@@ -19,23 +27,30 @@
     display: flex;
     align-items: center;
   }
-  article {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-  }
+
   h3 {
     font-size: 14px;
     margin: 0;
     text-align: start;
   }
+  :active {
+    text-decoration: none;
+  }
+  :hover {
+    cursor: pointer;
+  }
 }
 .custom-card:hover {
   opacity: 0.4;
+}
+.time-moment {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: nowrap row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
 }
 .time-icon::before {
   font-family: fontAwesome;
@@ -58,7 +73,12 @@
   padding: 0px 5px 0px 0px;
   color: red;
 }
+.story-title {
+  text-align: start;
+  font-size: 14px;
+}
 .custom-car-buttom {
+  height: 90px;
   width: 68px;
   border: none;
   border-top-right-radius: 6px;

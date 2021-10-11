@@ -1,32 +1,63 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styles from './customCard.module.scss';
 import Moment from 'react-moment';
-const CustomCard = ({ card }) => {
-  const [showFav, setShowFav] = useState(true);
-  const handleButtonFav = () => {
-    setShowFav(!showFav);
+import { types } from '../../store/storeReducer';
+import { StoreContext } from '../../store/StoreProvider';
+const CustomCard = ({ card, fav }) => {
+  console.log('ver key', fav);
+  const [store, dispatch] = useContext(StoreContext);
+  const { newsHackerPost, newsPagination } = store;
+
+  const handleButtonFav = (e) => {
+    console.log('ver e', e);
+    const objIndex = newsHackerPost.hits.findIndex((obj) => {
+      console.log(obj);
+      return obj.objectID === e.objectID;
+    });
+    const updatedObj = {
+      ...newsHackerPost.hits[objIndex],
+      fav: !card.fav,
+    };
+    const updatedProjects = [
+      ...newsHackerPost.hits.slice(0, objIndex),
+      updatedObj,
+      ...newsHackerPost.hits.slice(objIndex + 1),
+    ];
+    localStorage.setItem(
+      'POSTNEWS',
+      JSON.stringify({ ...newsHackerPost, hits: updatedProjects })
+    );
+
+    dispatch({
+      type: types.getNewPosts,
+      payload: { ...newsHackerPost, hits: updatedProjects },
+    });
   };
 
   return (
-    <a className={styles['custom-card']}>
-      <article>
-        <p>
+    <p className={styles['custom-card']}>
+      <a href={card.story_url} target="_blank" rel="noopener noreferrer">
+        <span className={styles['time-moment']}>
           <span className={styles['time-icon']}></span>
-          <a>
+          <span>
             {
               <Moment fromNow ago>
                 {card.created_at}
               </Moment>
             }
-          </a>
-        </p>
-        <h3>{card.story_title}</h3>
-      </article>
-      <button className={styles['custom-car-buttom']} onClick={handleButtonFav}>
-        {showFav ? (
+          </span>
+        </span>
+        <span className={styles['story-title']}>{card.story_title}</span>
+      </a>
+      <button
+        className={styles['custom-car-buttom']}
+        onClick={() => handleButtonFav(card)}
+      >
+        {card.fav ? (
           <span className={styles['heart-icon']}></span>
         ) : (
           <img
@@ -38,12 +69,13 @@ const CustomCard = ({ card }) => {
           />
         )}
       </button>
-    </a>
+    </p>
   );
 };
 
 CustomCard.propTypes = {
   card: PropTypes.object,
+  fav: PropTypes.bool,
 };
 
 export default CustomCard;

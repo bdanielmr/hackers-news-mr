@@ -6,6 +6,7 @@ const types = {
   getPaginaMovie: 'get - pagina - movie',
   getInfoMovie: 'get - info - movie',
   getNewPosts: 'get-new-posts',
+  getNewsPagination: 'get-news-pagination',
 };
 
 const initialStore = {
@@ -16,6 +17,7 @@ const initialStore = {
   paginationList: null,
   infoMovie: {},
   newsHackerPost: [],
+  newsPagination: [0, 8],
 };
 
 const storeReducer = (state, action) => {
@@ -24,6 +26,11 @@ const storeReducer = (state, action) => {
       return {
         ...state,
         newsHackerPost: action.payload,
+      };
+    case types.getNewsPagination:
+      return {
+        ...state,
+        newsPagination: action.payload,
       };
     case types.getTrendingMoviesSuccess:
       return {

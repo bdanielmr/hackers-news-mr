@@ -6,10 +6,11 @@ import { apiGetHackerNews } from '../../utils/routes';
 import { StoreContext } from '../../store/StoreProvider';
 import { types } from '../../store/storeReducer';
 import CustomCard from '../../components/CustomCard/CustomCard';
-
+import styles from './homeHackerNews.module.scss';
+import CustomPagination from '../../components/CustomPagination/CustomPagination';
 const HomeHackerNews = memo((props) => {
   const [store, dispatch] = useContext(StoreContext);
-  const { newsHackerPost } = store;
+  const { newsHackerPost, newsPagination } = store;
   const { data: getNews } = useFetch(apiGetHackerNews, {
     tecnologi: 'react',
   });
@@ -27,7 +28,10 @@ const HomeHackerNews = memo((props) => {
   };
 
   useEffect(() => {
-    if (getNews?.hits) {
+    if (
+      !localStorage?.POSTNEWS?.hits?.[0].objectID !==
+      getNews?.hits?.[0].objectID
+    ) {
       getListMovies();
       localStorage.setItem('POSTNEWS', JSON.stringify(getNews));
     }
@@ -40,12 +44,18 @@ const HomeHackerNews = memo((props) => {
 
   console.log('newsHackerPost', newsHackerPost.hits);
   return (
-    <div>
-      pinga
+    <div className={styles.container}>
       {!!newsHackerPost &&
-        newsHackerPost?.hits?.map((post, index) => {
-          return <CustomCard key={index} card={post} />;
-        })}
+        newsHackerPost?.hits
+          ?.slice(newsPagination[0], newsPagination[1])
+          .map((post, index) => {
+            return (
+              <div key={index}>
+                <CustomCard card={post} fav={post.fav} />
+              </div>
+            );
+          })}
+      {<CustomPagination start={1} end={newsHackerPost.nbPages} />}
     </div>
   );
 });
