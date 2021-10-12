@@ -1,9 +1,30 @@
 .container {
-  width: 800px;
+  width: 80%;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 5%;
   grid-row-gap: 20px;
   justify-items: stretch;
   align-items: stretch;
+}
+.containerPagination {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.containerSelect {
+  width: 80%;
+
+  text-align: start;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
 }

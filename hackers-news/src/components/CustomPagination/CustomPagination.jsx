@@ -6,13 +6,16 @@ import PropTypes from 'prop-types';
 import { StoreContext } from '../../store/StoreProvider';
 import { types } from '../../store/storeReducer';
 import styles from './customPagination.module.scss';
-const CustomPagination = memo(({ start, end, pagina = 'index1' }) => {
+import { useFetch } from '../../hooks/useFetch';
+import { apiGetHackerNewsPage } from '../../utils/routes';
+
+const CustomPagination = memo(({ tecno, start, end, pagina = 'index1' }) => {
   const descRef = useRef();
   const [store, dispatch] = useContext(StoreContext);
-  const { newsPagination } = store;
+  const { newsPagination, newsHackerPost } = store;
   const [colorFocus, setColorFocus] = useState(pagina);
   const [putResPage, setPutResPage] = useState(start);
-  console.log('newsPagination 2', newsPagination);
+
   const handleMorePage = () => {
     if (putResPage < end) {
       setPutResPage(putResPage + 1);
@@ -39,21 +42,46 @@ const CustomPagination = memo(({ start, end, pagina = 'index1' }) => {
       );
     }
   };
-  const updateListMovies = (res, component, find) => {
-    dispatch({
-      type: types.getTrendingMoviesSuccess,
-      payload: res.results,
-      allPayload: { ...res, component, find },
-    });
-  };
+
   const handleFocus = (e, id) => {
     setColorFocus(id);
-    console.log('ver este e', e.target.value);
+    console.log(
+      'ver este e',
+      e.target.value,
+      'nnid',
+      id,
+      'paperes',
+      newsHackerPost?.hits?.length
+    );
     setPutResPage(Number(e.target.value));
     dispatch({
       type: types.getNewsPagination,
       payload: [Number(e.target.value - 1) * 8, Number(e.target.value) * 8],
     });
+
+    if (Number(e.target.value) * 8 > newsHackerPost?.hits?.length) {
+      console.log('push and dispatch api ');
+      apiGetHackerNewsPage({
+        tecnologi: tecno,
+        page: parseInt((e.target.value * 3) / 8),
+      }).then((res) => {
+        console.log('ver concat', [...newsHackerPost.hits, ...res.hits]);
+        dispatch({
+          type: types.getNewPosts,
+          payload: {
+            ...newsHackerPost,
+            hits: [...newsHackerPost.hits, ...res.hits],
+          },
+        });
+        localStorage.setItem(
+          'POSTNEWS',
+          JSON.stringify({
+            ...newsHackerPost,
+            hits: [...newsHackerPost.hits, ...res.hits],
+          })
+        );
+      });
+    }
   };
   const handleBlur = (e, id) => {};
   useEffect(() => {
@@ -63,7 +91,7 @@ const CustomPagination = memo(({ start, end, pagina = 'index1' }) => {
   return (
     <>
       {end > 1 && (
-        <>
+        <div className={styles['custom-pagination']}>
           <div
             className={styles['custom-pagination-arrow-body']}
             onClick={handleMinusPage}
@@ -97,15 +125,15 @@ const CustomPagination = memo(({ start, end, pagina = 'index1' }) => {
                       key={ID}
                       style={{
                         textAlign: 'center',
-                        color: 'black',
-                        border: colorFocus === ID ? '1px solid black' : '',
+                        color: colorFocus === ID ? 'white' : 'black',
+                        border:
+                          colorFocus === ID
+                            ? '1px solid #d9d9d9'
+                            : '1px solid #d9d9d9',
                         width: colorFocus === ID ? '30px' : '30px',
                         height: colorFocus === ID ? '30px' : '30px',
-                        background:
-                          colorFocus === ID
-                            ? 'linear-gradient(to right, #1ed5a9 0%, #01b4e4 100%)'
-                            : '',
-                        borderRadius: colorFocus === ID ? '50%' : '',
+                        background: colorFocus === ID ? '#1890ff' : '',
+                        borderRadius: colorFocus === ID ? '6px' : '6px',
                         cursor: 'pointer',
                       }}
                       onChange={() => console.log('onChange')}
@@ -123,7 +151,7 @@ const CustomPagination = memo(({ start, end, pagina = 'index1' }) => {
           >
             <a className={styles['custom-pagination-arrow']}>{'>'}</a>
           </div>
-        </>
+        </div>
       )}
     </>
   );
@@ -133,6 +161,7 @@ CustomPagination.propTypes = {
   start: PropTypes.number,
   end: PropTypes.number,
   pagina: PropTypes.string,
+  tecno: PropTypes.string,
 };
 
 export default CustomPagination;

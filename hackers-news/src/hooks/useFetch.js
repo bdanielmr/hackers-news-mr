@@ -9,6 +9,7 @@ export const useFetch = (serverService, data) => {
 
   useEffect(() => {
     serverService(data).then((res) => {
+      console.log('ver estado enviando ', res);
       setState({
         data: res,
         loading: false,

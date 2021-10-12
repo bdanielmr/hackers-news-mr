@@ -1,0 +1,21 @@
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+.custom-select {
+  width: 240px;
+  height: 32px;
+  padding: 0px 5px;
+  color: #2e2e2e;
+  border: solid 1px #2e2e2e;
+  border-radius: 4px;
+
+  option {
+    font-size: 130%;
+  }
+}
+.custom-select-icon-angular::before {
+  font-family: fontAwesome;
+  font-size: 16px;
+  content: '\f017';
+  width: 16px;
+  height: 16px;
+  padding: 0px 5px 0px 0px;
+}
