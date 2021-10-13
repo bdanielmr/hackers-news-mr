@@ -5,8 +5,8 @@
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 5%;
   grid-row-gap: 20px;
-  justify-items: stretch;
-  align-items: stretch;
+  padding: 0;
+  list-style-type: none;
 }
 .containerPagination {
   width: 100%;
@@ -21,10 +21,19 @@
 
   text-align: start;
 }
-
+.containeButton {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 @media (max-width: 1024px) {
+  .containerPagination {
+    height: 100%;
+    display: flex;
+  }
   .container {
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
   }
 }

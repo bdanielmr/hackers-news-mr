@@ -9,6 +9,7 @@ import CustomCard from '../../components/CustomCard/CustomCard';
 import styles from './homeHackerNews.module.scss';
 import CustomPagination from '../../components/CustomPagination/CustomPagination';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 const HomeHackerNews = memo((props) => {
   const [getTecnologi, setGetTecnologi] = useState(
@@ -54,6 +55,9 @@ const HomeHackerNews = memo((props) => {
   return (
     <>
       <div className={styles.containerPagination}>
+        <div className={styles.containeButton}>
+          <CustomButton />
+        </div>
         <div className={styles.containerSelect}>
           <CustomSelect
             getNews={getNews}
@@ -66,14 +70,18 @@ const HomeHackerNews = memo((props) => {
             }}
           />
         </div>
-        <div className={styles.container}>
+        <ul className={styles.container}>
           {!!newsHackerPost &&
             newsHackerPost?.hits
               ?.slice(newsPagination[0], newsPagination[1])
               .map((post, index) => {
-                return <CustomCard key={index} card={post} fav={post.fav} />;
+                return (
+                  <li key={index}>
+                    <CustomCard key={index} card={post} fav={post.fav} />
+                  </li>
+                );
               })}
-        </div>
+        </ul>
 
         <CustomPagination
           key={getTecnologi}

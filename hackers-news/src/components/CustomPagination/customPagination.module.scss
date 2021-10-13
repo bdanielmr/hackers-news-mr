@@ -26,3 +26,8 @@
 .custom-pagination-arrow:hover {
   color: rgb(1, 180, 228);
 }
+@media (max-width: 1024px) {
+  .custom-pagination {
+    display: none;
+  }
+}

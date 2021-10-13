@@ -1,7 +1,7 @@
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 .custom-card {
   text-decoration: none;
-  width: 550px;
+  width: 100%;
   height: 90px;
 
   padding: 0 0 0 26px;
@@ -83,4 +83,9 @@
   border: none;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
+}
+@media (max-width: 1024px) {
+  .custom-card {
+    padding: 0px 0px 0px 10px;
+  }
 }
