@@ -1,6 +1,22 @@
 .App {
   text-align: center;
-  background: #fcfcfc;
+
+  header {
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+    background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    div {
+      text-align: start;
+      width: 90%;
+      font-size: 28px;
+      font-family: 'Times New Roman', Times, serif;
+      color: #8f8d8d;
+    }
+  }
 }
 
 .App-logo {
