@@ -12,7 +12,7 @@ import { apiGetHackerNewsPage } from '../../utils/routes';
 const CustomPagination = memo(({ tecno, start, end, pagina = 'index1' }) => {
   const descRef = useRef();
   const [store, dispatch] = useContext(StoreContext);
-  const { newsPagination, newsHackerPost } = store;
+  const { newsPagination, newsHackerPost, localPost } = store;
   const [colorFocus, setColorFocus] = useState(pagina);
   const [putResPage, setPutResPage] = useState(start);
 
@@ -45,39 +45,37 @@ const CustomPagination = memo(({ tecno, start, end, pagina = 'index1' }) => {
 
   const handleFocus = (e, id) => {
     setColorFocus(id);
-    console.log(
-      'ver este e',
-      e.target.value,
-      'nnid',
-      id,
-      'paperes',
-      newsHackerPost?.hits?.length
-    );
+
     setPutResPage(Number(e.target.value));
     dispatch({
       type: types.getNewsPagination,
       payload: [Number(e.target.value - 1) * 8, Number(e.target.value) * 8],
     });
 
-    if (Number(e.target.value) * 8 > newsHackerPost?.hits?.length) {
-      console.log('push and dispatch api ');
+    if (Number(e.target.value) * 8 > localPost?.hits?.length) {
       apiGetHackerNewsPage({
         tecnologi: tecno,
         page: parseInt((e.target.value * 3) / 8),
       }).then((res) => {
-        console.log('ver concat', [...newsHackerPost.hits, ...res.hits]);
         dispatch({
           type: types.getNewPosts,
           payload: {
-            ...newsHackerPost,
-            hits: [...newsHackerPost.hits, ...res.hits],
+            ...localPost,
+            hits: [...localPost.hits, ...res?.hits],
+          },
+        });
+        dispatch({
+          type: types.postLocalPost,
+          payload: {
+            ...localPost,
+            hits: [...localPost.hits, ...res?.hits],
           },
         });
         localStorage.setItem(
           'POSTNEWS',
           JSON.stringify({
-            ...newsHackerPost,
-            hits: [...newsHackerPost.hits, ...res.hits],
+            ...localPost,
+            hits: [...localPost.hits, ...res?.hits],
           })
         );
       });

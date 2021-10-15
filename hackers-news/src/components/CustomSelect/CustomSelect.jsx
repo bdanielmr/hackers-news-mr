@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { memo, useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { apiGetHackerNews } from '../../utils/routes';
@@ -14,39 +14,88 @@ const CustomSelect = ({ getNews, sendData, sendUseState }) => {
       : sendUseState.tecnoState
   );
   const [store, dispatch] = useContext(StoreContext);
-  const { newsHackerPost } = store;
+  const { newsHackerPost, localPost, localPostAngular } = store;
   const [indexFocus, setIndexFocus] = useState(sendUseState.focusState);
   const handleSelect = (e) => {
     sendUseState.tecno(e.target.value);
     sendUseState.focus('index1');
-    console.log('ver select', e.target.value);
+    dispatch({
+      type: types.editLocalSelect,
+      payload: e.target.value,
+    });
     if (typeof getNews !== 'undefined') {
-      apiGetHackerNews({
-        tecnologi: e.target.value,
-      }).then((res) => {
-        dispatch({
-          type: types.getNewPosts,
-          payload: {
-            ...newsHackerPost,
-            hits: [...res.hits],
-          },
-        });
+      if (e.target.value === 'angular') {
         localStorage.setItem(
           'POSTNEWS',
-          JSON.stringify({
-            ...newsHackerPost,
-            hits: [...res.hits],
-          })
+          JSON.stringify(
+            JSON.parse(localStorage.getItem('ANGULARLOCALFAVORITE'))
+          )
         );
-        localStorage.setItem('SELECTNEWS', JSON.stringify(e.target.value));
         dispatch({
-          type: types.getNewsPagination,
-          payload: [0, 8],
+          type: types.postLocalPost,
+          payload: JSON.parse(localStorage.getItem('ANGULARLOCALFAVORITE')),
         });
-      });
+        dispatch({
+          type: types.getNewPosts,
+          payload: JSON.parse(localStorage.getItem('ANGULARLOCALFAVORITE')),
+        });
+      } else if (
+        e.target.value === 'reactjs' &&
+        JSON.parse(localStorage.getItem('REACTLOCALFAVORITE'))
+      ) {
+        localStorage.setItem(
+          'POSTNEWS',
+          JSON.stringify(JSON.parse(localStorage.getItem('REACTLOCALFAVORITE')))
+        );
+        dispatch({
+          type: types.postLocalPost,
+          payload: JSON.parse(localStorage.getItem('REACTLOCALFAVORITE')),
+        });
+        dispatch({
+          type: types.getNewPosts,
+          payload: JSON.parse(localStorage.getItem('REACTLOCALFAVORITE')),
+        });
+      } else if (
+        e.target.value === 'vuejs' &&
+        JSON.parse(localStorage.getItem('VUELOCALFAVORITE'))
+      ) {
+        localStorage.setItem(
+          'POSTNEWS',
+          JSON.stringify(JSON.parse(localStorage.getItem('VUELOCALFAVORITE')))
+        );
+
+        dispatch({
+          type: types.postLocalPost,
+          payload: JSON.parse(localStorage.getItem('VUELOCALFAVORITE')),
+        });
+        dispatch({
+          type: types.getNewPosts,
+          payload: JSON.parse(localStorage.getItem('VUELOCALFAVORITE')),
+        });
+      } else {
+        apiGetHackerNews({
+          tecnologi: e.target.value,
+        }).then((res) => {
+          dispatch({
+            type: types.postLocalPost,
+            payload: res,
+          });
+          dispatch({
+            type: types.getNewPosts,
+            payload: res,
+          });
+          localStorage.setItem('POSTNEWS', JSON.stringify(res));
+        });
+      }
     }
-    sendData({ getTecnologi, indexFocus });
+    localStorage.setItem('SELECTNEWS', JSON.stringify(e.target.value));
+    dispatch({
+      type: types.getNewsPagination,
+      payload: [0, 8],
+    });
   };
+
+  useEffect(() => {}, [localPostAngular]);
   return (
     <select
       className={styles['custom-select']}
@@ -67,4 +116,4 @@ const CustomSelect = ({ getNews, sendData, sendUseState }) => {
 
 CustomSelect.propTypes = {};
 
-export default CustomSelect;
+export default memo(CustomSelect);

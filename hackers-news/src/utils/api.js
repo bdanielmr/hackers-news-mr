@@ -16,6 +16,6 @@ export const getApiNews = async (
     },
   })
     .then((response) => response.json())
-    .catch((err) => err);
+    .catch((err) => JSON.parse(err));
   return resp;
 };

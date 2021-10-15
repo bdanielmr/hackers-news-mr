@@ -1,23 +1,32 @@
 /* eslint-disable no-case-declarations */
 const types = {
-  getTrendingMoviesSuccess: 'get - trending - movies - success',
-  getTrendingMoviesError: 'get - trending - movies - error',
-  getSearchMovies: 'get - search - movies',
-  getPaginaMovie: 'get - pagina - movie',
-  getInfoMovie: 'get - info - movie',
   getNewPosts: 'get-new-posts',
   getNewsPagination: 'get-news-pagination',
+  getPostAngular: 'get-post-angular',
+  getPostReact: 'get-post-react',
+  getPostVue: 'get-post-vue',
+  postLocalPost: 'post-local-post',
+  postLocalPostAngular: 'post-local-post-angular',
+  postLocalPostReact: 'post-local-post-react',
+  postLocalPostVue: 'post-local-post-vue',
+  editLocalPostAngular: 'edit-local-post-angular',
+  editLocalPostReact: 'edit-local-post-react',
+  editLocalPostVue: 'edit-local-post-vue',
+  editLocalSelect: 'edit-local-select',
 };
 
 const initialStore = {
-  movie: {},
-  listMovies: [],
-  listMoviesLoading: false,
-  listMoviesError: [],
-  paginationList: null,
-  infoMovie: {},
   newsHackerPost: [],
   newsPagination: [0, 8],
+  hackerPostAngular: [],
+  hackerPostReact: [],
+  hackerPostVue: [],
+  localPost: JSON.parse(localStorage.getItem('POSTNEWS')),
+  localSelect: JSON.parse(localStorage.getItem('SELECTNEWS')),
+  selectInput: false,
+  localPostAngular: JSON.parse(localStorage.getItem('ANGULARLOCALFAVORITE')),
+  localPostReact: JSON.parse(localStorage.getItem('REACTLOCALFAVORITE')),
+  localPostVue: JSON.parse(localStorage.getItem('VUELOCALFAVORITE')),
 };
 
 const storeReducer = (state, action) => {
@@ -32,32 +41,47 @@ const storeReducer = (state, action) => {
         ...state,
         newsPagination: action.payload,
       };
-    case types.getTrendingMoviesSuccess:
+    case types.postLocalPost:
       return {
         ...state,
-        listMovies: action.payload,
-        paginationList: action.allPayload,
+        localPost: action.payload,
       };
-    case types.getTrendingMoviesError:
+    case types.postLocalPostAngular:
       return {
         ...state,
-        listMoviesError: action.payload,
+        hackerPostAngular: action.payload,
       };
-    case types.getPaginaMovie:
+    case types.postLocalPostReact:
       return {
         ...state,
-        listMovies: action.payload,
+        hackerPosReact: action.payload,
       };
-    case types.getInfoMovie:
+    case types.postLocalPostVue:
       return {
         ...state,
-        infoMovie: action.payload,
+        postLocalPostVue: action.payload,
       };
-    case types.getSearchMovies:
+    case types.editLocalPostAngular:
       return {
         ...state,
-        listMovies: action.payload,
+        localPostAngular: action.payload,
       };
+    case types.editLocalPostReact:
+      return {
+        ...state,
+        localPostReact: action.payload,
+      };
+    case types.editLocalPostVue:
+      return {
+        ...state,
+        localPostVue: action.payload,
+      };
+    case types.editLocalSelect:
+      return {
+        ...state,
+        localSelect: action.payload,
+      };
+
     default:
       return state;
   }

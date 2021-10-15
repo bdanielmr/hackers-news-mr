@@ -2,12 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './customButton.module.scss';
-import { useRouteMatch, useParams } from 'react-router-dom';
+import { useRouteMatch, useParams, Link } from 'react-router-dom';
 const CustomButton = (props) => {
   const match = useRouteMatch();
   const gParam = useParams();
-  console.log('match', match);
-  console.log('param', gParam);
+
   return (
     <div className={styles['custom-button']}>
       <a
