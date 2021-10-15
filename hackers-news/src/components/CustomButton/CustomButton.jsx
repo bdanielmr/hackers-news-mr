@@ -6,7 +6,9 @@ import { useRouteMatch, useParams, Link } from 'react-router-dom';
 const CustomButton = (props) => {
   const match = useRouteMatch();
   const gParam = useParams();
-
+  /**
+   * component button thats contain tab to router to home or favorite roturer
+   */
   return (
     <div className={styles['custom-button']}>
       <a

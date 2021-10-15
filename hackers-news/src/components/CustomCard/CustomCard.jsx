@@ -8,7 +8,11 @@ import Moment from 'react-moment';
 import { types } from '../../store/storeReducer';
 import { StoreContext } from '../../store/StoreProvider';
 import { useRouteMatch, useParams, Link } from 'react-router-dom';
-
+/**
+ * 
+  component card that render a objetc that contain propeties of hits response api
+  this comnponent need to a prop card to get render 
+ */
 const CustomCard = ({ card, fav }) => {
   const [store, dispatch] = useContext(StoreContext);
   const {
@@ -19,9 +23,13 @@ const CustomCard = ({ card, fav }) => {
     localPostReact,
     localPostVue,
   } = store;
-  const match = useRouteMatch();
+  const match = useRouteMatch(); // thats use for identify method that use in a diferent router like '/' or '/favorite'
 
   const handleButtonFav = (e) => {
+    /**
+     * this method first evalute if a localstorage exist then realcie evently methad for every select option like add fav propetie for the object hits
+     * this method only use on router '/'
+     */
     if (JSON.parse(localStorage.getItem('SELECTNEWS')) === 'angular') {
       const objIndex = localPost?.hits?.findIndex((obj) => {
         return obj.objectID === e.objectID;
@@ -118,6 +126,10 @@ const CustomCard = ({ card, fav }) => {
   };
 
   const handleAllFavorite = (e) => {
+    /**
+     *this method remove abject of hits response on localstore and reducer to manage of all favorite post card
+     only eject on router '/favorite'
+     */
     if (e.selectNews === 'angular') {
       const objIndex = localPostAngular?.hits?.findIndex((obj) => {
         return obj.objectID === e.objectID;

@@ -8,7 +8,10 @@ import { types } from '../../store/storeReducer';
 import styles from './customPagination.module.scss';
 import { useFetch } from '../../hooks/useFetch';
 import { apiGetHackerNewsPage } from '../../utils/routes';
-
+/**
+ * component manage pagination of app
+ * get response post and calculate eight first post and generate all pagination
+ */
 const CustomPagination = memo(({ tecno, start, end, pagina = 'index1' }) => {
   const descRef = useRef();
   const [store, dispatch] = useContext(StoreContext);
@@ -106,14 +109,7 @@ const CustomPagination = memo(({ tecno, start, end, pagina = 'index1' }) => {
                 const ID = 'index' + pagination;
                 return (
                   <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: '30px',
-                      height: '30px',
-                      margin: '0px 10px',
-                    }}
+                    className={styles['custom-pagination-body-input']}
                     key={i}
                   >
                     <input
@@ -128,8 +124,7 @@ const CustomPagination = memo(({ tecno, start, end, pagina = 'index1' }) => {
                           colorFocus === ID
                             ? '1px solid #d9d9d9'
                             : '1px solid #d9d9d9',
-                        width: colorFocus === ID ? '30px' : '30px',
-                        height: colorFocus === ID ? '30px' : '30px',
+
                         background: colorFocus === ID ? '#1890ff' : '',
                         borderRadius: colorFocus === ID ? '6px' : '6px',
                         cursor: 'pointer',

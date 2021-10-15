@@ -7,6 +7,10 @@ import { apiGetHackerNews } from '../../utils/routes';
 import { StoreContext } from '../../store/StoreProvider';
 import { types } from '../../store/storeReducer';
 import styles from './CustomSelect.module.scss';
+/**
+ * component select manage and set diferent post (angular, react, vue) and set localstorage
+ * if there no exist and get a response api if ther no exist post news
+ */
 const CustomSelect = ({ getNews, sendData, sendUseState }) => {
   const [getTecnologi, setGetTecnologi] = useState(
     localStorage?.SELECTNEWS

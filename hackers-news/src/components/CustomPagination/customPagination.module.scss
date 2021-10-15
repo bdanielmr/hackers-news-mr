@@ -26,8 +26,70 @@
 .custom-pagination-arrow:hover {
   color: rgb(1, 180, 228);
 }
+.custom-pagination-body-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin: 0px 10px;
+  input {
+    width: 35px;
+    height: 35px;
+  }
+}
 @media (max-width: 1024px) {
   .custom-pagination {
-    display: none;
+    width: 100%;
+  }
+  .custom-pagination-body {
+    width: 70%;
+  }
+
+  .custom-pagination-body-input {
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    margin: 0px 10px;
+    input {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+@media (max-width: 700px) {
+  .custom-pagination {
+    width: 100%;
+  }
+  .custom-pagination-body {
+    width: 70%;
+  }
+  .custom-pagination-body-input {
+    width: 25px;
+    height: 25px;
+    padding: 1px;
+    margin: 0px 10px;
+    input {
+      width: 25px;
+      height: 25px;
+    }
+  }
+}
+@media (max-width: 400px) {
+  .custom-pagination {
+    width: 100%;
+  }
+  .custom-pagination-body {
+    width: 100%;
+  }
+  .custom-pagination-body-input {
+    width: 10px;
+    height: 10px;
+    padding: 1px;
+    margin: 0px 10px;
+    input {
+      width: 20px;
+      height: 20px;
+    }
   }
 }

@@ -6,6 +6,9 @@ import './App.scss';
 import ViewsRouter from './router';
 import StoreProvider from './store/StoreProvider';
 function App() {
+  /**
+   * set StoreProvider provider to manage diferent reducers
+   */
   return (
     <div className="App">
       <header>
